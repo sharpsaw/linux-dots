@@ -1,0 +1,10 @@
+#!/bin/sh
+if type pinfo >/dev/null 2>&1; then
+    alias info=pinfo
+else
+    if [ -n "$WANT_ALL" ]; then
+        echo "No pinfo. ☹̆"
+        echo "  TODO: apti pinfo || ,pkg http://...pinfo || ,somethingelse"
+    fi
+fi
+

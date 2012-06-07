@@ -1,0 +1,3 @@
+#!/bin/sh -xe
+xsel -b "$@"
+# TODO - make this check for xclip, if no xsel.

@@ -1,2 +1,10 @@
-#!/bin/sh -xe
-sudo aptitude install "$@"
+#!/bin/sh -e
+## Use aptitude or apt-get to install a package.
+if type aptitude &>/dev/null; then
+    sudo aptitude install "$@"
+elif type apt-get &>/dev/null; then
+    sudo apt-get install "$@"
+else
+    echo "No aptitude or apt-get in $PATH"
+    exit 1
+fi

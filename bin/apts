@@ -1,2 +1,10 @@
-#!/bin/sh -xe
-aptitude search "$@"
+#!/bin/bash -e
+## Use aptitude or apt-cache to search for a package.
+if type aptitude &>/dev/null; then
+    aptitude search "$@"
+elif type apt-cache &>/dev/null; then
+    apt-cache search "$@"
+else
+    echo "No aptitude or apt-search in $PATH"
+    exit 1
+fi

@@ -1,0 +1,9 @@
+#!/bin/bash -e
+if type eix &>/dev/null; then
+    eix "$@"
+elif type aptitude &>/dev/null || type apt-cache &>/dev/null; then
+    apts "$@"
+else
+    echo "Found neither \`eix\`, \`aptitude\` nor \`apt-cache\` in $PATH"
+    echo "Perhaps you can teach \`,s\` how to work for your system?"
+fi

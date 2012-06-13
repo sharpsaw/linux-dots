@@ -1,0 +1,5 @@
+#!/bin/sh
+## Configure & make install, passing $DOT_CONFIGURE_ARGS to ./configure, and using $MAKE_INSTALL_SU prepended to the 'make install' command.
+# TODO: Make this automatically configure for DOT_CONFIGURE_ARGS and sudo.
+( [ -e configure ] || ./autogen.sh ) && \
+    ./configure $DOT_CONFIGURE_ARGS && $MAKE_INSTALL_SU make install

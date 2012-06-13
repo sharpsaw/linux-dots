@@ -1,0 +1,3 @@
+#!/bin/sh
+## Workaround for systems that set $LESS (which means git won't override it)
+[ "$LESS" = "-R -M --shift 5" ] && unset LESS

@@ -1,0 +1,5 @@
+#!/bin/sh -xe
+## Runs an `emerge` when mask failures. Good as `autounmask-write !!`
+"$@" --autounmask-write || true # returns 1 for some reason.
+sudo dispatch-conf
+"$@"

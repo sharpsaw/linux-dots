@@ -39,10 +39,10 @@ echo "Running: ssh -fNR ${PUBLIC_PORT_COLOR}$public_port${DEFAULT_COLOR}:localho
 R_arg=$public_port:localhost:$local_port
 ssh -fNR $R_arg $public_addr "$@"
 # BTW thanks to Freenode's #gentoo's marduk for pointing out -fN !
-kidpid=$!
 
 find_pid='ps aux | grep "[s]sh..fNR.$R_arg" | awk "{print\$2}"'
 cat <<EOT
+
 ${NOTICE_COLOR}OK.$DEFAULT_COLOR
 
 Now $PUBLIC_HOST_COLOR$public_addr:$PUBLIC_PORT_COLOR$public_port$DEFAULT_COLOR tunnels into $LOCAL_PORT_COLOR$local_port$DEFAULT_COLOR.

@@ -1,10 +1,11 @@
 #!/bin/bash -e
 ## Just a handy script, because I find this invocation confusing. Don't forget -v.
-NOTICE_COLOR="[32;1m"
-PUBLIC_HOST_COLOR="[32m"
-PUBLIC_PORT_COLOR="[34m"
-LOCAL_PORT_COLOR="[33m"
-DEFAULT_COLOR="[0m"
+ESC=`echo -e "\e"`
+NOTICE_COLOR="$ESC[32;1m"
+PUBLIC_HOST_COLOR="$ESC[32m"
+PUBLIC_PORT_COLOR="$ESC[34m"
+LOCAL_PORT_COLOR="$ESC[33m"
+DEFAULT_COLOR="$ESC[0m"
 fmt <<EOT
 ${NOTICE_COLOR}Some hints:$DEFAULT_COLOR
 

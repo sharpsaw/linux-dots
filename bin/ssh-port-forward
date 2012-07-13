@@ -1,0 +1,6 @@
+#!/bin/bash -e
+## Just a handy script, because I find this invocation confusing. Don't forget -v.
+read -ep 'Remote address: ' addr
+read -ep 'Remote port: ' rport
+read -ep 'Local port: ' lport
+ssh -R $rport:localhost:$lport $addr "$@"

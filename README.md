@@ -21,6 +21,7 @@ jjV}k!bin-docs
 *      aptui (sudo aptitude update; sudo aptitude install "$@")
 * autounmask-write (Runs an `emerge` when mask failures. Good as `autounmask-write !!`)
 *       clip (xsel -b "$@")
+* ssh-port-forward (Just a handy script, because I find this invocation confusing. Don't forget -v.)
 
 Why "-dots"?  See: http://github.com/ouicode/rkingy-dots-conf
 

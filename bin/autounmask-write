@@ -1,5 +1,11 @@
 #!/bin/sh -xe
 ## Runs an `emerge` when mask failures. Good as `autounmask-write !!`
-sudo "$@" --autounmask-write || true # returns 1 for some reason.
+if [ ',i' = $1 ]; then
+    shift
+    CMD="emerge -atv $@"
+else
+    CMD="$@"
+fi
+sudo $CMD --autounmask-write || true # returns 1 for some reason.
 sudo dispatch-conf
-sudo "$@"
+sudo $CMD

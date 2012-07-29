@@ -1,4 +1,5 @@
 #!/bin/bash -e
+## Package install using emerge or aptitude, whichever's available.
 if type emerge &>/dev/null; then
     sudo emerge -atv "$@"
 elif type aptitude &>/dev/null || type apt-get &>/dev/null; then

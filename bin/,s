@@ -1,4 +1,5 @@
 #!/bin/bash -e
+## Package search using eix or aptitude, whichever's present.
 if type eix &>/dev/null; then
     eix "$@"
 elif type aptitude &>/dev/null || type apt-cache &>/dev/null; then

@@ -1,0 +1,5 @@
+#!/bin/sh -xe
+## find -iname + ack -ila
+for n in "$@"; do
+    find . -iname "*$n*" & ack -ila $n
+done

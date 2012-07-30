@@ -1,0 +1,33 @@
+#!/bin/sh -e
+## Start or reattach to a session, using ~/.tmux.conf plus ~/.$1-tmux.conf (where $1 defaults to "quick")
+# See http://github.com/rking/rking-dots/ for some example .*-tmux.conf's
+
+# Also, if you give it any more args it'll run that instead, but if you know
+# how to use that you're already reading this script, so I figured I'd
+# document it here and keep the short blurb short.
+
+if [ -n "$1" ]; then
+    name=$1
+    shift
+else
+    name=quick
+fi
+
+cmd="${@:-attach}"
+
+THISSERV="tmux -2 -L $name"
+CONFFILE=~/.$name-tmux.conf
+
+[ -e $CONFFILE ] || (echo "No $CONFFILE found."; exit 1)
+
+# Big-boy mode: allows running even if nested. (Which can easily occur
+# if you start one terminal from another.)
+unset TMUX
+
+if ! $THISSERV list-sessions 2>/dev/null; then
+   $THISSERV -f $CONFFILE start-server
+   $THISSERV new-session $name
+   $THISSERV source-file ~/.tmux.conf
+fi
+
+$THISSERV $cmd

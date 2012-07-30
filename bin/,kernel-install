@@ -1,0 +1,14 @@
+#!/bin/sh -xe
+## Perform some steps to install a kernel. Not terribly generalized (yet). Set ARCH=… if not i386, and DRIVE=… if not /dev/sda
+: Must provide a handy-name.
+[[ 1 == $# ]]
+cd /usr/src/linux
+: I do not like running this as root, but there is a debate about it.
+sudo make
+sudo make modules_install
+[[ -e /boot/grub ]] || sudo mount /boot
+: This is should probably auto-detect when not i386.
+sudo cp arch/${ARCH:-i386}/boot/bzImage /boot/kernel-$1
+echo /boot/kernel-$1 | sudo tee -a /boot/grub/grub.conf
+sudo vim /boot/grub/grub.conf
+sudo grub-install ${DRIVE:-/dev/sda}

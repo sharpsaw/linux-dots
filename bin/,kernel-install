@@ -1,14 +1,17 @@
-#!/bin/sh -xe
-## Perform some steps to install a kernel. Not terribly generalized (yet). Set ARCH=… if not i386, and DRIVE=… if not /dev/sda
-: Must provide a handy-name.
-[[ 1 == $# ]]
+#!/bin/zsh
+## Perform some steps to install a kernel. Not terribly generalized (yet). Set DRIVE=… to override default of /dev/sda, SUDO='' to override sudo, and MAKEFLAGS=… to override -j5.
+set -xe
+is_singular() { [ 1 = $# ] }
+: Must provide a handy-name as a command-line arg.
+is_singular "$@"
+sudo=${SUDO:-sudo}
+makeflags=${MAKEFLAGS:--j5}
 cd /usr/src/linux
 : I do not like running this as root, but there is a debate about it.
-sudo make
-sudo make modules_install
-[[ -e /boot/grub ]] || sudo mount /boot
-: This is should probably auto-detect when not i386.
-sudo cp arch/${ARCH:-i386}/boot/bzImage /boot/kernel-$1
-echo /boot/kernel-$1 | sudo tee -a /boot/grub/grub.conf
-sudo vim /boot/grub/grub.conf
-sudo grub-install ${DRIVE:-/dev/sda}
+$sudo make $makeflags
+$sudo make $makeflags modules_install
+[ -e /boot/grub ] || $sudo mount /boot
+$sudo cp arch/*/boot/bzImage(.) /boot/kernel-$1
+echo /boot/kernel-$1 | $sudo tee -a /boot/grub/grub.conf
+$sudo vim /boot/grub/grub.conf
+$sudo grub-install ${DRIVE:-/dev/sda}

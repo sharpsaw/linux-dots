@@ -2,7 +2,7 @@
 ## Reattach to a named session (defaults to "quick"), or start it up using ~/.$1-tmux.conf
 # See http://github.com/rking/rking-dots/ for some example .*-tmux.conf's
 
-session=${1:-quick}
+session=${1:-quick}; shift
 session_startup_file=~/.$session-tmux.conf
 
 # Start the server (which is the one time when ~/.tmux.conf is read), then
@@ -11,8 +11,9 @@ session_startup_file=~/.$session-tmux.conf
 # sessions you care about.)
 tmux has -t dummy 2>/dev/null || tmux new -d -s dummy
 
-if tmux has $session; then
-    tmux attach -t $session
+if tmux has -t $session; then
+    # Don't forget about passing "-d" to detach the other clients.
+    tmux attach -t $session "$@"
 else
-    tmux new -s $session\; source $session_startup_file
+    tmux new -s $session\; source $session_startup_file\; "$@"
 fi

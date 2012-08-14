@@ -1,0 +1,4 @@
+#!/bin/sh -xe
+## List the files belonging to a given package (only for Gentoo with app-portage/portage-utils at the moment)
+type qlist &>/dev/null || echo ",i portage-utils for this to work"
+qlist "$@"

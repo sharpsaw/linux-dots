@@ -1,17 +1,36 @@
 #!/bin/zsh
-## Perform some steps to install a kernel. Not terribly generalized (yet). Set DRIVE=… to override default of /dev/sda, SUDO='' to override sudo, and MAKEFLAGS=… to override -j5.
+## Perform some steps to install a kernel. Set DRIVE=… to override default of /dev/sda, SUDO='' to override sudo, and MAKEFLAGS=… to override -j5.
+if [ $# -gt 0 ]; then
+    name=$1
+    shift
+else
+    read name'?Enter name (no spaces or slashes) for new kernel: '
+fi
 set -xe
-is_singular() { [ 1 = $# ] }
-: Must provide a handy-name as a command-line arg.
-is_singular "$@"
+img=/boot/kernel-$name
 sudo=${SUDO:-sudo}
 makeflags=${MAKEFLAGS:--j5}
 cd /usr/src/linux
-: I do not like running this as root, but there is a debate about it.
 $sudo make $makeflags
 $sudo make $makeflags modules_install
 [ -e /boot/grub ] || $sudo mount /boot
-$sudo cp arch/*/boot/bzImage(.) /boot/kernel-$1
-echo /boot/kernel-$1 | $sudo tee -a /boot/grub/grub.conf
-$sudo vim /boot/grub/grub.conf
+$sudo cp arch/*/boot/bzImage(.) $img
+$sudo name=$name img=$img ruby <<'EOT'
+    conf_name = '/boot/grub/grub.conf'
+    input = File.read conf_name
+    input.match /^kernel \S+ (.+)/
+    previous_kernel_options = $1
+    input.sub! /^title (.+) \S+/ do
+        <<-EOT + $&
+# d2jkkjxxjxxjxx
+# Almost ready to install. Please verify the following title/kernel are correct.
+# (Speedster's note: try hitting yy@" from column 0 of the (cryptic) line above)
+# title #$1 #{ENV['name']}
+# kernel #{ENV['img']} #{previous_kernel_options}
+
+        EOT
+    end
+    File.open conf_name, 'w' do |f| f.write input end
+EOT
+$sudo vim /boot/grub/grub.conf +/'^# d2j'
 $sudo grub-install ${DRIVE:-/dev/sda}

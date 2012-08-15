@@ -2,6 +2,8 @@
 ## Reattach to a named session (defaults to "quick"), or start it up using ~/.$1-tmux.conf
 # See http://github.com/rking/rking-dots/ for some example .*-tmux.conf's
 
+# TODO: http://ft.bewatermyfriend.org/comp/zsh.html
+
 if [ $# -gt 0 ]; then
     session=$1; shift
 else
@@ -20,4 +22,5 @@ if tmux has -t $session; then
     tmux attach -t $session "$@"
 else
     tmux new -s $session\; source $session_startup_file\; "$@"
+    tmux attach -t $session "$@"
 fi

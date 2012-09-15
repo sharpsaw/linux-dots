@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+## Swipe stdout from another program by pid (using strace -p)
+
+# Test by running
+# ruby -e 'p $$; loop do puts "stdout #{rand}"; warn "stderr"; sleep 1.0 end'
+# cat-p <the pid that comes out at the start>
+pid = ARGV[0].to_s or fail "Need a pid to trace."
+cmd = ['strace', '-p', pid, '-e', 'write', '-s', '999999', :err=>[:child, :out]]
+IO.popen cmd do |io|
+  io.each_line do |line|
+    line.sub /^write\(([12]), "(.+)", \d+\)/ do
+      out_io = $1 == '1' ? $stdout : $stderr
+      # Thanks to Spooner Freenode's #ruby for figuring out the %{"#{…}"} part!
+      out_io.print eval %{"#{$2}"}
+    end
+  end
+end

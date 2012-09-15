@@ -11,7 +11,7 @@ IO.popen cmd do |io|
     line.sub /^write\(([12]), "(.+)", \d+\)/ do
       out_io = $1 == '1' ? $stdout : $stderr
       # Thanks to Spooner Freenode's #ruby for figuring out the %{"#{…}"} part!
-      out_io.print eval %{"#{$2}"}
+      out_io.print eval %{"#$2"}
     end
   end
 end

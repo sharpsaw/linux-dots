@@ -1,4 +1,5 @@
 #!/bin/bash
+## Tail -f all non-binary, non-"old" log files in /var/log
 LOGS=`sudo file /var/log/{,nginx}/* | egrep -v '(data|directory)$' |\
     cut -d: -f1 | egrep -v '\.(gz|old)$'`
 sudo tail -f $LOGS

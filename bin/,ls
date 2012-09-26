@@ -1,4 +1,14 @@
-#!/bin/sh -xe
-## List the files belonging to a given package (only for Gentoo with app-portage/portage-utils at the moment)
-type qlist &>/dev/null || echo ",i portage-utils for this to work"
-qlist "$@"
+#!/bin/bash -xe
+## List the files belonging to a given package
+if [ -e /etc/gentoo-release ]; then
+    if ! type qlist &>/dev/null; then
+        echo ",i portage-utils # for this to work."
+        exit 2
+    fi
+    qlist "$@"
+elif type dpkg &>/dev/null; then
+    dpkg -L "$@"
+else
+    echo ",ls needs to be updated for this distro."
+fi
+

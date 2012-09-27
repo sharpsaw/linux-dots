@@ -1,0 +1,9 @@
+#!/bin/bash -xe
+## Show which package provides a certain file (for Apt and Portage)
+if type apt-file &>/dev/null; then
+    apt-file search "$@"
+elif type e-file &>/dev/null; then
+    e-file "$@"
+else
+    echo "No apt-file or e-file found. ☹"
+fi

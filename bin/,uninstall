@@ -1,0 +1,9 @@
+#!/bin/bash -xe
+## Uninstall (for Apt and Portage)
+if type aptitude &>/dev/null; then
+    sudo aptitude remove "$@"
+elif type emerge &>/dev/null; then
+    ,i -C "$@"
+else
+    echo "No apitude or emerge found. ☹"
+fi

@@ -24,7 +24,7 @@ $sudo name=$name img=$img ruby <<'EOT'
         <<-EOT + $&
 # d2jkkjxxjxxjxx
 # Almost ready to install. Please verify the following title/kernel are correct.
-# (Speedster's note: try hitting yy@" from column 0 of the (cryptic) line above)
+# (Speedster's note: try hitting Y@" from column 0 of the (cryptic) line above)
 # title #$1 #{ENV['name']}
 # kernel #{ENV['img']} #{previous_kernel_options}
 
@@ -32,5 +32,4 @@ $sudo name=$name img=$img ruby <<'EOT'
     end
     File.open conf_name, 'w' do |f| f.write input end
 EOT
-$sudo vim /boot/grub/grub.conf +/'^# d2j'
-$sudo grub-install ${DRIVE:-/dev/sda}
+,grub

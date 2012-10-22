@@ -1,0 +1,7 @@
+#!/bin/zsh
+## Mount /boot, edit /boot/grub/grub.conf, install if you don't :cq vim
+set -xe
+sudo=${SUDO:-sudo}
+[ -e /boot/grub ] || $sudo mount /boot
+$sudo vim /boot/grub/grub.conf +'silent! /^# d2j'
+$sudo grub-install ${DRIVE:-/dev/sda} # TODO || 'echo -e "\e[031;1mAbend\[e0m!"'

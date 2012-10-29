@@ -47,6 +47,19 @@ There are some useful bits still over at: http://github.com/sharpsaw/local-dots
 
 (Though, actually, I plan on merging that into here, somehow.)
 
+vim-eunuch
+----------
+
+ From the vim-eunuch README.md:
+
+ - `:Unlink` — Delete a buffer and the file on disk simultaneously.
+ - `:Remove` — Like `:Unlink`, but doesn't require a neckbeard.
+ - `:Rename` — Rename a buffer and the file on disk simultaneously.
+ - `:Find` — Run find and load the results into the quickfix list.
+ - `:Locate` — Run locate and load the results into the quickfix list.
+ - `:SudoWrite` — Write a privileged file with sudo.
+ - `:W` — Write every open window. Handy for kicking off tools like guard.
+
 Contact
 -------
 

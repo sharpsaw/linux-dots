@@ -63,7 +63,7 @@ prompt() {
 }
 
 kill_howto() {
-    find_pid='ps aux | grep "[s]sh..fNR.$R_arg" | awk "{print\$2}"'
+    find_pid="ps aux | grep \"[s]sh..fNR.$R_arg\" | awk \"{print\\\$2}\""
     cat <<EOT
 
     ${NOTICE_COLOR}OK.$DEFAULT_COLOR

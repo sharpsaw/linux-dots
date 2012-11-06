@@ -4,6 +4,8 @@ if type apt-file &>/dev/null; then
     apt-file search "$@"
 elif type e-file &>/dev/null; then
     e-file "$@"
+elif type zypper &>/dev/null; then
+    zypper what-provides "$@"
 else
     echo "No apt-file or e-file found. ☹"
 fi

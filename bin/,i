@@ -4,6 +4,8 @@ if type emerge &>/dev/null; then
     sudo emerge -atv "$@"
 elif type aptitude &>/dev/null || type apt-get &>/dev/null; then
     apti "$@"
+elif type zypper &>/dev/null; then
+    sudo zypper install "$@"
 else
     echo "Found neither \`emerge\`, \`aptitude\` nor \`apt-get\` in $PATH"
     echo "Perhaps you can teach \`,i\` how to work for your system?"

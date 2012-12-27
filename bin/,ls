@@ -8,6 +8,8 @@ if [ -e /etc/gentoo-release ]; then
     qlist "$@"
 elif type dpkg &>/dev/null; then
     dpkg -L "$@"
+elif type rpm &>/dev/null; then
+    rpm -ql "$@"
 else
     echo ",ls needs to be updated for this distro."
 fi

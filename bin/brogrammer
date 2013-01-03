@@ -1,6 +1,6 @@
 #!/bin/sh -xe
-sudo useradd -m -G hax0rs $1
-sudoedit /etc/ssh/sshd_config /usr/local/etc/wemux.conf
+sudo useradd -m -G pair $1
+sudo sed -i "s/AllowUsers/& $1/" /etc/ssh/sshd_config
 sudo /etc/init.d/sshd restart
 ssh_dir=/home/$1/ssh
 sudo -u $1 mkdir $ssh_dir

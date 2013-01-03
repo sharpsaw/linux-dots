@@ -1,3 +1,7 @@
 #!/bin/sh -xe
-mkdir /tmp/$$
-env -i TERM=$TERM HOME=/tmp/$$ $SHELL -f
+home=/tmp/$$
+if [ $# -gt 0 ]; then
+    home=$1; shift
+fi
+[ -e $home ] || mkdir $home
+env -i TERM=$TERM HOME=$home $SHELL -f

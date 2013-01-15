@@ -1,0 +1,26 @@
+#!/bin/sh -xe
+## Wifi startup sequence (using dhcpcd and possibly using wpa_supplicant)
+actually_set_up() {
+    sudo ifconfig $if down
+    sudo killall dhcpcd wpa_supplicant || true
+    sudo ifconfig $if up
+    sudo iwconfig $if essid $essid
+    if sudo grep "ssid=.$essid" $wpa_supplicant_conf_path; then
+        sudo wpa_supplicant -B -Dwext -i$if -c$wpa_supplicant_conf_path
+    else
+        : wpa_passphrase $essid
+        : -- Consider piping that into sudo tee $wpa_supplicant_conf_path --
+    fi
+    sudo dhcpcd $if
+    sudo /etc/init.d/ntp-client start &
+    ping -c1 4.2.2.2; ping -c2 a.de
+}
+wpa_supplicant_conf_path=/etc/wpa_supplicant/wpa_supplicant.conf
+if=${IF:-wlan0}
+essid=$1
+if [ -n "$essid" ]; then
+    actually_set_up
+else
+    sudo iwlist scan | grep 'Cell\|Quality\|ESSID'
+fi
+

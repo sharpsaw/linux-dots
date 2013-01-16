@@ -1,8 +1,12 @@
 #!/bin/sh -xe
-sudo useradd -m -G pair $1
-sudo sed -i "s/AllowUsers/& $1/" /etc/ssh/sshd_config
-sudo /etc/init.d/sshd restart
-ssh_dir=/home/$1/ssh
-sudo -u $1 mkdir $ssh_dir
+if [ $1 != '-k' ]; then
+    sudo useradd -m -G pair $1
+    sudo sed -i "s/AllowUsers/& $1/" /etc/ssh/sshd_config
+    sudo /etc/init.d/sshd restart
+    ssh_dir=/home/$1/ssh
+    sudo -u $1 mkdir $ssh_dir
+else
+    shift
+fi
 sudo -u $1 vim $ssh_dir/authorized_keys +set\ tw=0
 sudo -u $1 chmod go-rwx $ssh_dir -R

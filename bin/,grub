@@ -5,3 +5,5 @@ sudo=${SUDO:-sudo}
 [ -e /boot/grub ] || $sudo mount /boot
 $sudo vim /boot/grub/grub.conf +'silent! /^# d2j'
 $sudo grub-install ${DRIVE:-/dev/sda} # TODO || 'echo -e "\e[031;1mAbend\[e0m!"'
+echo -n "Reboot? ^C for no. "; read
+$sudo reboot

@@ -1,4 +1,4 @@
 #!/bin/sh
-if [ -z "$I_LOVE_CAPS_LOCK" ] && expr "`tty`" : /dev/tty; then
+if [ -z "$I_LOVE_CAPS_LOCK" ] && expr "`tty`" : /dev/tty >/dev/null; then
   ,loadkeys
 fi

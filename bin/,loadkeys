@@ -1,0 +1,5 @@
+if ! expr `tty` : /dev/tty; then
+  echo "Doesn't seem to be a console, so loadkeys probably won't work."
+  exit 1
+fi
+sudo loadkeys ~/.../src/linux-dots/modified-qwerty.map

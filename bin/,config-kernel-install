@@ -1,2 +1,8 @@
 #!/bin/sh -xe
-cd /usr/src/linux && sudo make menuconfig && ,kernel-install "$@"
+## make menuconfig then do a ,kernel-install. Backs up .config to ~/.backup-kernel-configs/
+cd /usr/src/linux
+mkdir -p ~/.backup-kernel-configs
+sudo chown -R $USER:$USER .
+cp .config ~/.backup-kernel-config-`date +s%F`-$$
+make menuconfig
+,kernel-install "$@"

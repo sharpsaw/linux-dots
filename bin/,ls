@@ -10,6 +10,8 @@ elif type dpkg &>/dev/null; then
     dpkg -L "$@"
 elif type rpm &>/dev/null; then
     rpm -ql "$@"
+elif type brew &>/dev/null; then
+    brew list "$@"
 else
     echo ",ls needs to be updated for this distro."
 fi

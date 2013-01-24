@@ -11,7 +11,7 @@ img=/boot/kernel-$name
 sudo=${SUDO:-sudo}
 makeflags=${MAKEFLAGS:--j5}
 cd /usr/src/linux
-make $makeflags
+$sudo make $makeflags
 $sudo make $makeflags modules_install
 [ -e /boot/grub ] || $sudo mount /boot
 $sudo cp arch/*/boot/bzImage(.) $img

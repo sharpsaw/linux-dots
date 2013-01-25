@@ -1,4 +1,6 @@
 #!/bin/sh
-if [ -z "$I_LOVE_CAPS_LOCK" ] && expr "`tty`" : /dev/tty >/dev/null; then
+if [ -z "$I_LOVE_CAPS_LOCK" -a 'Linux' = "`uname`" ] &&
+    expr "`tty`" : /dev/tty >/dev/null
+then
   ,loadkeys
 fi

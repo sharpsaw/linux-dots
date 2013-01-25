@@ -1,7 +1,7 @@
 #!/bin/bash -e
 ## Just a handy script, because I find this invocation confusing. Don't forget -v.
-ESC=`echo -e "\e"`
-NOTICE_COLOR="$ESC[32;1m"
+ESC=$'\033'
+NOTICE_COLOR="$ESC[32m"
 PUBLIC_HOST_COLOR="$ESC[32m"
 PUBLIC_PORT_COLOR="$ESC[34m"
 LOCAL_PORT_COLOR="$ESC[33m"
@@ -33,10 +33,14 @@ go_go_go() {
 }
 
 clues() {
-    fmt <<EOT
+    cat <<EOT
     ${NOTICE_COLOR}Some hints:$DEFAULT_COLOR
 
-    Let's say you want the current machine's port ${LOCAL_PORT_COLOR}3000${DEFAULT_COLOR} to be publicly accessible via your ssh account as ${PUBLIC_HOST_COLOR}someserver.com${DEFAULT_COLOR}:${PUBLIC_PORT_COLOR}9000${DEFAULT_COLOR}, which happens to accept ssh connections from a nonstandard port, ${PUBLIC_HOST_COLOR}2222${DEFAULT_COLOR}. Your answers would be like this:
+    Let's say you want the current machine's port ${LOCAL_PORT_COLOR}3000${DEFAULT_COLOR}
+    to be publicly accessible via your ssh account as
+    ${PUBLIC_HOST_COLOR}someserver.com${DEFAULT_COLOR}:${PUBLIC_PORT_COLOR}9000${DEFAULT_COLOR}, which happens to accept
+    ssh connections from a nonstandard port, ${PUBLIC_HOST_COLOR}2222${DEFAULT_COLOR}.
+    Your answers would be like this:
 EOT
 
     cat <<EOT
@@ -48,8 +52,10 @@ EOT
 
 EOT
 
-    fmt <<EOT
-    …after running that you'll be able to connect to, say, http://${PUBLIC_HOST_COLOR}someserver.com${DEFAULT_COLOR}:${PUBLIC_PORT_COLOR}9000${DEFAULT_COLOR} and it will pipe into your localhost:${LOCAL_PORT_COLOR}3000${DEFAULT_COLOR}.
+    cat <<EOT
+    …after running that you'll be able to connect to, say,
+    http://${PUBLIC_HOST_COLOR}someserver.com${DEFAULT_COLOR}:${PUBLIC_PORT_COLOR}9000${DEFAULT_COLOR}
+    and it will pipe into your localhost:${LOCAL_PORT_COLOR}3000${DEFAULT_COLOR}.
 EOT
 
     echo

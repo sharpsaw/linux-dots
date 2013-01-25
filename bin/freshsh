@@ -1,7 +1,0 @@
-#!/bin/sh -xe
-home=/tmp/$$
-if [ $# -gt 0 ]; then
-    home=$1; shift
-fi
-[ -e $home ] || mkdir $home
-env -i TERM=$TERM HOME=$home $SHELL -f

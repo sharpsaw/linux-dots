@@ -1,3 +1,0 @@
-#!/bin/sh -xe
-[ ! -s "$1" ] || (echo "File not empty, not deleting."; exit 37)
-rm "$1"

@@ -1,5 +1,0 @@
-#!/bin/sh -xe
-## find -iname + ack -ila
-for n in "$@"; do
-    finame $n & ack -ila $n
-done

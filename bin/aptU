@@ -1,2 +1,0 @@
-#!/bin/sh -xe
-sudo aptitude update; sudo aptitude dist-upgrade "$@"

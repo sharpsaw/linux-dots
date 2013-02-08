@@ -1,0 +1,3 @@
+#!/bin/sh -xe
+sudo /etc/init.d/$1 stop
+sudo rc-update delete $1 default || echo "Only set up for Gentoo; FIXME."

@@ -1,0 +1,2 @@
+#!/bin/sh -xe
+sudo rc-update -s "$@" || echo "Only set up for Gentoo; FIXME."

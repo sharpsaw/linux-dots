@@ -1,0 +1,40 @@
+#!/bin/sh -xe
+# Run (maybe make (maybe download)) the "Traditional Vi" — http://ex-vi.sourceforge.net/
+# TODO: Deduplicate this against heirloom-sh (this one is more generalized)
+HEIRLOOM_BASE_DIR=${HEIRLOOM_BASE_DIR:-~/pkg}
+repo_name=ex-vi
+product=vi
+heirloom_dir="$HEIRLOOM_BASE_DIR/$repo_name"
+cvs_root=:pserver:anonymous@ex-vi.cvs.sourceforge.net:/cvsroot/$repo_name
+
+run() {
+    [ -x $heirloom_dir/$product ] && exec $heirloom_dir/$product "$@" || true
+}
+retry() {
+    exec $0 "$@"
+}
+build() {
+    echo "Found $heirloom_dir, but no '$product' executable. Building."
+    cd $heirloom_dir
+    make && echo Ok\!; echo
+}
+download() {
+    type cvs || (echo 'Requires `cvs` to download. =('; exit 1)
+    [ -d $HEIRLOOM_BASE_DIR ] || \
+        mkdir $HEIRLOOM_BASE_DIR || \
+            (echo 'Weird. Couldn''t `mkdir $HEIRLOOM_BASE_DIR`'; exit 1)
+    cd $HEIRLOOM_BASE_DIR
+    cvs -d$cvs_root co -P $repo_name
+    cd $_
+    type ctags && ctags -R . &
+}
+
+if [ -e $heirloom_dir ]; then
+    run "$@"
+    build
+    retry "$@"
+else
+    download
+    build
+    retry "$@"
+fi

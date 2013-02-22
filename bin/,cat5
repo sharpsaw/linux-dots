@@ -16,4 +16,4 @@ verbose_system 'sudo', 'killall', DHCPD
 interface_match('wlan').each{|e| verbose_system 'sudo', 'ifconfig', e, 'down'}
 cat5 = interface_match('eth').first
 verbose_system 'sudo', DHCPD, cat5
-verbose_system *%w(ping a.de -c)
+verbose_system *%w(ping a.de -c 1)

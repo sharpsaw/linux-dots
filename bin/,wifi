@@ -1,4 +1,5 @@
 #!/bin/zsh
+set -x
 ## Wifi startup sequence (using dhcpcd and possibly using wpa_supplicant)
 actually_set_up() {
     sudo iw dev $if connect $essid
@@ -38,4 +39,3 @@ else
     sudo iw $if scan | grep 'freq\|signal\|SSID' |
         sed 's/SSID: \(.*\)/^ that is [32;1m\1[0m\n/'
 fi
-

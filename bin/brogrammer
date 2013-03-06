@@ -2,4 +2,4 @@
 sudo useradd -m -G pair $1
 sudo sed -i "s/AllowUsers/& $1/" /etc/ssh/sshd_config
 sudo /etc/init.d/sshd restart
-hubkey $1 $2
+tweemux hubkey $1 $2

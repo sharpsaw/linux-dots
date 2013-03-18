@@ -26,7 +26,8 @@ if=${IF:-wlan0}
 essid=$1
 
 sudo ifconfig $if down
-sudo killall -q dhcpcd wpa_supplicant || true
+sudo killall -q dhcpcd wpa_supplicant && sleep 2 || true
+sudo rfkill unblock wlan && sleep 2 || true
 sudo ifconfig $if up
 
 if [ -n "$essid" ]; then

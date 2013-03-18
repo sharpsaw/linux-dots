@@ -1,24 +1,32 @@
 #!/usr/bin/env ruby
 ## The opposite of ,wifi - for when it's connected to wlan0 but you want eth0     #encoding: utf-8
-DHCPD = 'dhcpcd'
 
-def verbose_system *cmd
-  warn "\e[33m#{cmd.join ' '}\e[0m"
-  system *cmd or fail
+def main
+  cat5 = interface_match('eth').first
+  stubborn_system 'sudo', DHCPD, cat5, '-x'
+  sleep 2 # dhcpcd takes a bit to shutdown
+  stubborn_system *%w(sudo rfkill block wlan)
+  interface_match('wlan').each{|e| verbose_system 'sudo', 'ifconfig', e, 'down'}
+  verbose_system 'sudo', DHCPD, cat5
+  verbose_system *%w(ping a.de -c 1)
 end
+
+DHCPD = 'dhcpcd'
 
 def interface_match pat
   lines = `sudo ip addr`.split ?\n
   lines.map{|e| e[/^\d+:\s+(#{pat}\d+)/] && $1}.compact
 end
 
-cat5 = interface_match('eth').first
-begin
-  verbose_system 'sudo', DHCPD, cat5, '-x'
-  sleep 2 # dhcpcd takes a bit to shutdown
+def verbose_system *cmd
+  warn "\e[33m#{cmd.join ' '}\e[0m"
+  system *cmd or fail
+end
+
+def stubborn_system *cmd
+  verbose_system *cmd
 rescue => e
   warn "#{e} — continuing anyway"
 end
-interface_match('wlan').each{|e| verbose_system 'sudo', 'ifconfig', e, 'down'}
-verbose_system 'sudo', DHCPD, cat5
-verbose_system *%w(ping a.de -c 1)
+
+main

@@ -15,8 +15,8 @@ actually_set_up() {
         fi >> $wpa_supplicant_conf_path
     fi
     sudo dhcpcd $if
-    ping -c1 4.2.2.2
-    until ping -c1 a.de; do sleep 1; echo Retrying ping, waiting on dhcpcd; done
+    ping -qc1 4.2.2.2
+    until ping -qc1 a.de; do sleep 1; echo Retrying ping, waiting on dhcpcd; done
     [ -e $ntp ] && sudo $ntp start &
 }
 set -e
@@ -29,6 +29,7 @@ sudo ifconfig $if down
 sudo killall -q dhcpcd wpa_supplicant && sleep 2 || true
 sudo rfkill unblock wlan && sleep 2 || true
 sudo ifconfig $if up
+sleep 2 # argh
 
 if [ -n "$essid" ]; then
     actually_set_up

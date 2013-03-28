@@ -8,6 +8,7 @@ def main
   stubborn_system *%w(sudo rfkill block wlan)
   interface_match('wlan').each{|e| verbose_system 'sudo', 'ifconfig', e, 'down'}
   verbose_system 'sudo', DHCPD, cat5
+  sleep 3 # dhcpcd also takes a bit to work
   verbose_system *%w(ping a.de -c 1)
 end
 

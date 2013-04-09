@@ -27,7 +27,7 @@ essid=$1
 
 sudo ifconfig $if down
 sudo killall -q dhcpcd wpa_supplicant && sleep 2 || true
-sudo rfkill unblock wlan && sleep 2 || true
+sudo rfkill unblock wlan && sleep 4 || true
 sudo ifconfig $if up
 sleep 2 # argh
 

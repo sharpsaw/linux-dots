@@ -1,0 +1,10 @@
+#!/bin/sh -xe
+## Install everything I'll want to debug system problems
+
+sudo apt-get install mlocate
+sudo updatedb &
+
+sudo apt-get install \
+    htop \
+    mtr nmap \
+    gdb strace \

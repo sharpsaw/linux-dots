@@ -1,3 +1,10 @@
 #!/bin/sh -xe
 sudo /etc/init.d/$1 start
-sudo rc-update add $1 default || echo "Only set up for Gentoo, at the moment."
+has() { sudo which $1 >/dev/null 2>&1; }
+if has rc-update; then
+    sudo rc-update add $1 default
+elif has update-rc.d; then
+    sudo update-rc.d $1 defaults
+else
+    : No update-rc.d or rc-update script. Please inform $0 of your startup system
+fi

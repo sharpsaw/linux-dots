@@ -5,6 +5,7 @@ sudo apt-get install mlocate
 sudo updatedb &
 
 sudo apt-get install \
+    moreutils \
     htop \
-    mtr nmap \
+    mtr-tiny nmap \
     gdb strace \

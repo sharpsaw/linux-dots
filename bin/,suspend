@@ -1,2 +1,2 @@
 #!/bin/sh -xe
-gksudo pm-suspend
+sudo pm-suspend

@@ -1,0 +1,3 @@
+#!/bin/sh -xe
+: Only apt-get at the moment // FIXME
+sudo apt-get update

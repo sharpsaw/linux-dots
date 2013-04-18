@@ -1,0 +1,3 @@
+#!/bin/sh -xe
+## Like suspend, but a deeper freeze ( http://www.unixmen.com/suspend-vs-hibernate-in-linux-what-is-the-difference/ )
+sudo pm-hibernate
